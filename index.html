@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>双风格计算器</title>
+
+<style>
+*{
+box-sizing:border-box;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
+}
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+transition:.5;
+overflow:hidden;
+}
+
+/* Material You */
+body.material{
+background:linear-gradient(135deg,#d9e8ff,#f7d8ff);
+}
+
+body.material .box{
+background:#ffffffcc;
+color:#222;
+}
+
+body.material button{
+background:#e8def8;
+color:#392b4f;
+}
+
+
+/* Liquid Glass */
+
+body.glass{
+background:
+radial-gradient(circle at top left,#7ddcff,transparent 40%),
+radial-gradient(circle at bottom right,#ff8bd8,transparent 40%),
+#111;
+}
+
+body.glass .box{
+background:rgba(255,255,255,.18);
+backdrop-filter:blur(25px);
+-webkit-backdrop-filter:blur(25px);
+border:1px solid rgba(255,255,255,.35);
+color:white;
+}
+
+body.glass button{
+background:rgba(255,255,255,.25);
+color:white;
+}
+
+
+/* Layout */
+
+.box{
+width:360px;
+padding:25px;
+border-radius:35px;
+box-shadow:0 20px 50px #0004;
+transition:.5;
+}
+
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+
+h2{
+margin:0;
+}
+
+
+.display{
+height:90px;
+margin:20px 0;
+padding:20px;
+border-radius:25px;
+background:#0002;
+font-size:42px;
+display:flex;
+justify-content:flex-end;
+align-items:center;
+overflow:hidden;
+}
+
+
+.buttons{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+}
+
+
+button{
+height:65px;
+border:0;
+border-radius:22px;
+font-size:22px;
+cursor:pointer;
+transition:.15;
+}
+
+
+button:active{
+transform:scale(.9);
+}
+
+
+.theme{
+width:auto;
+padding:10px 16px;
+}
+
+
+.equal{
+background:#6750a4!important;
+color:white!important;
+}
+
+</style>
+</head>
+
+
+<body class="material">
+
+
+<div class="box">
+
+
+<div class="top">
+
+<h2>计算器</h2>
+
+<button class="theme" onclick="switchTheme()">
+🎨
+</button>
+
+</div>
+
+
+
+<div id="display" class="display">
+0
+</div>
+
+
+
+<div class="buttons">
+
+
+<button onclick="clearDisplay()">C</button>
+<button onclick="back()">⌫</button>
+<button onclick="percent()">%</button>
+<button onclick="add('/')">÷</button>
+
+
+<button onclick="add('7')">7</button>
+<button onclick="add('8')">8</button>
+<button onclick="add('9')">9</button>
+<button onclick="add('*')">×</button>
+
+
+<button onclick="add('4')">4</button>
+<button onclick="add('5')">5</button>
+<button onclick="add('6')">6</button>
+<button onclick="add('-')">−</button>
+
+
+<button onclick="add('1')">1</button>
+<button onclick="add('2')">2</button>
+<button onclick="add('3')">3</button>
+<button onclick="add('+')">+</button>
+
+
+<button onclick="add('0')">0</button>
+<button onclick="add('.')">.</button>
+<button class="equal" onclick="result()">=</button>
+<button onclick="clearDisplay()">AC</button>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+let text="";
+
+let display=document.getElementById("display");
+
+
+
+function show(){
+
+display.innerText=text||"0";
+
+}
+
+
+
+function add(x){
+
+text+=x;
+
+show();
+
+}
+
+
+
+function clearDisplay(){
+
+text="";
+
+show();
+
+}
+
+
+
+function back(){
+
+text=text.slice(0,-1);
+
+show();
+
+}
+
+
+
+function percent(){
+
+try{
+
+text=String(Number(text)/100);
+
+show();
+
+}
+
+catch{
+
+text="错误";
+
+show();
+
+}
+
+}
+
+
+
+function result(){
+
+try{
+
+text=String(eval(text));
+
+show();
+
+}
+
+catch{
+
+text="错误";
+
+show();
+
+}
+
+}
+
+
+
+function switchTheme(){
+
+if(document.body.className==="material"){
+
+document.body.className="glass";
+
+}
+
+else{
+
+document.body.className="material";
+
+}
+
+}
+
+
+</script>
+
+
+</body>
+</html>
